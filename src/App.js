@@ -1,24 +1,55 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+import Home from './components/Home';
+import RestaurantsCreate from './components/RestaurantsCreate';
+import RestaurantsLogin from './components/RestaurantsLogin';
+import RestaurantsList from './components/RestaurantsList';
+import RestaurantsSearch from './components/RestaurantsSearch';
+import RestaurantsUpdate from './components/RestaurantsUpdate';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Router>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+            <Link to="/list">Listing</Link>
+            <Link to="/create">Create</Link>
+            <Link to="/search">Search</Link>
+            <Link to="/login">Login</Link>
+          </li>
+        </ul>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/list">
+          <RestaurantsList />
+        </Route>
+        <Route path="/create">
+          <RestaurantsCreate />
+        </Route>
+        <Route path="/search">
+          <RestaurantsSearch />
+        </Route>
+        <Route path="/login"
+          render={props => (
+          <RestaurantsLogin {...props}/>
+          )}
         >
-          Learn React
-        </a>
-      </header>
+        </Route>
+        <Route path="/update/:id"
+        render={props=> (
+          <RestaurantsUpdate {...props} />
+        )}
+        >
+        </Route>
+      </Router>
     </div>
   );
 }
